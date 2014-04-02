@@ -51,7 +51,10 @@ $(document).ready(function(){
     //    proj = d3.geo.albers().origin([ 113.8, 18.2 ]).scale(2450);
     //proj = d3.geo.albers().origin([ east, north ]).parallels([ east, north ]).scale(scale);
     //proj = d3.geo.mercator().scale(12000).center([106.5760,15.4549]);//.translate([150,300]);
-    proj = d3.geo.mercator().scale(850).center([0,0]);
+    proj = d3.geo.mercator()
+    .scale(960 + 1)
+    .translate([960 / 2, 960 / 2])
+    .precision(.1);
     // path tags created based on the projection given
     path = d3.geo.path().projection(proj);
     //t = proj.translate(); // the projection's default translation
