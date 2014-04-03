@@ -703,13 +703,13 @@ function drawBoxplot(isRedraw) {
         var s = d3.event.target.extent();
         d3.selectAll('.boxplotPoints').classed("selected", function(d) {
             if(s[0] <= d[currentDimension] && d[currentDimension] <= s[1]){
-                $('#p'+d['ADM2CODE']).css('fill','rgba(124,240,10,0.0)');
-                $('#m'+d['ADM2CODE']).css('fill','rgba(124,240,10,0.0)');
-                d3.select('#s'+d['ADM2CODE']).classed("selected",true);
+                $('#p'+d['FIPS_CNTRY']).css('fill','rgba(124,240,10,0.0)');
+                $('#m'+d['FIPS_CNTRY']).css('fill','rgba(124,240,10,0.0)');
+                d3.select('#s'+d['FIPS_CNTRY']).classed("selected",true);
             }else{
-                $('#p'+d['ADM2CODE']).css('fill','');
-                $('#m'+d['ADM2CODE']).css('fill','');
-                d3.select('#s'+d['ADM2CODE']).classed("selected",false);
+                $('#p'+d['FIPS_CNTRY']).css('fill','');
+                $('#m'+d['FIPS_CNTRY']).css('fill','');
+                d3.select('#s'+d['FIPS_CNTRY']).classed("selected",false);
             }
             return s[0] <= d[currentDimension] && d[currentDimension] <= s[1];
         });
@@ -872,13 +872,13 @@ function drawScatterplot(isRedraw) {
         d3.selectAll('.scatterplotPoints').classed("selected", function(d) {
             if(s[0][0] <= d[currentDimension] && d[currentDimension] <= s[1][0]
                 && s[0][1] <= d[currentDimension+"_lagged"] && d[currentDimension+"_lagged"] <= s[1][1]){
-                $('#p'+d['ADM2CODE']).css('fill','rgba(124,240,10,0.0)');
-                $('#m'+d['ADM2CODE']).css('fill','rgba(124,240,10,0.0)');
-                d3.select('#b'+d['ADM2CODE']).classed("selected",true);
+                $('#p'+d['FIPS_CNTRY']).css('fill','rgba(124,240,10,0.0)');
+                $('#m'+d['FIPS_CNTRY']).css('fill','rgba(124,240,10,0.0)');
+                d3.select('#b'+d['FIPS_CNTRY']).classed("selected",true);
             }else{
-                $('#p'+d['ADM2CODE']).css('fill','');
-                $('#m'+d['ADM2CODE']).css('fill','');
-                d3.select('#b'+d['ADM2CODE']).classed("selected",false);
+                $('#p'+d['FIPS_CNTRY']).css('fill','');
+                $('#m'+d['FIPS_CNTRY']).css('fill','');
+                d3.select('#b'+d['FIPS_CNTRY']).classed("selected",false);
             }
             return s[0][0] <= d[currentDimension] && d[currentDimension] <= s[1][0] && 
             s[0][1] <= d[currentDimension+"_lagged"] && d[currentDimension+"_lagged"] <= s[1][1];
@@ -903,12 +903,12 @@ function drawScatterplot(isRedraw) {
 
 // Function to help set the identifier
 function identifyBoxplot(d) {
-    return "b" + d.ADM2CODE;
+    return "b" + d.FIPS_CNTRY;
 }       
 
 // Function to help set the identifier
 function identifyScatterplot(d) {
-    return "s" + d.ADM2CODE;
+    return "s" + d.FIPS_CNTRY;
 }    
     
 function position(d) {
