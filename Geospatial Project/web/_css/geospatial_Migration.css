@@ -8,7 +8,8 @@ body {
     font-family: Arial,Helvetica,sans-serif; 
     font-size: 14px; 
     white-space: normal;
-    background: #000000;
+    background: url(../_images/blue_texture.jpg);
+    background-repeat: repeat;
     /*background: #666 url(../_images/background.jpg) repeat-x center top; */
     margin: 0px auto; 
 }
