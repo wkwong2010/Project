@@ -71,9 +71,9 @@
                                             
                                                       <p><form id="weightType" action="">
                                                 <b>Select Type of Analysis:</b>
-                                                <input type="radio" name="analysis" value="moran" checked onchange="updateAnalysisType();">Moran's I &nbsp;&nbsp;
+                                                <input type="radio" name="analysis" value="moran"  onchange="updateAnalysisType();">Moran's I &nbsp;&nbsp;
                                                 <!-- change the output of Estiamtes when changing radio button-->
-                                                <input type="radio" name="analysis" value="geary" onchange="updateAnalysisType();">Geary's C
+                                                <input type="radio" name="analysis" value="geary" checked onchange="updateAnalysisType();">Geary's C
                                             </form></p>
                                             <div id="contiguity" >
                                                 <b>Select Contiguity Neighbour Type: </b>  &nbsp;&nbsp;
@@ -86,7 +86,7 @@
                                             </div>
                                             
                                             <div id="gearyResult" style="display: none;">
-                                                   <p><b>Global Geary's C<span id="globalGearyStat"></span>&nbsp;&nbsp;&nbsp;<b>Significance: </b><span id="globalGearySig"></span></p>
+                                                   <p><b>Global Geary's C<span id="globalMoranStat"></span>&nbsp;&nbsp;&nbsp;<b>Significance: </b><span id="globalMoranSig"></span></p>
                                             </div>
                                             
                                             

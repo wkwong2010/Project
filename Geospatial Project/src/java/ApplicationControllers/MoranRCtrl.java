@@ -58,11 +58,14 @@ public class MoranRCtrl extends HttpServlet {
         String gearyOutputPathR = tempFilePathR + "//gearyResults.csv";
         tempFilePathR = tempFilePathR + "//tempLoadedData.csv";
         String isQueen = "FALSE";
+        boolean isMoran = true;
 
         if(request.getParameter("contiguity").equals("queen")){
            isQueen = "TRUE";
         }
-        
+        if(request.getParameter("analysis").equals("geary")){
+           isMoran = false;
+        }
 
 
 
@@ -113,8 +116,9 @@ public class MoranRCtrl extends HttpServlet {
                     
                     JSONObject globalMoranObject = new JSONObject();
                     JSONObject tempObj;
-                    JSONObject tempObj2; 
+                   // JSONObject tempObj2; 
                     //create variables for Moran Result
+                  if(isMoran){
                     for (int i = 1; i <= varListSize; i++) {
                         //System.out.println("|||||||||" + "migrationVar["+i+"]" + "||||||||||");
                         String variable = c.eval("dataVar[" + i + "]").asString();
@@ -141,32 +145,45 @@ public class MoranRCtrl extends HttpServlet {
                         }
                     }
                       c.voidEval("tempFrame[is.na(tempFrame)] <- 0");
-                   c.voidEval("write.csv(tempFrame, file = \"" + moranOutputPathR + "\")");
-                   
+                       c.voidEval("write.csv(tempFrame, file = \"" + moranOutputPathR + "\")");
+                  }else{
                    //create results for geary c 
                     for (int i = 1; i <= varListSize; i++) {
-                        //System.out.println("|||||||||" + "migrationVar["+i+"]" + "||||||||||");
                         String variable = c.eval("dataVar[" + i + "]").asString();
+                        c.voidEval("vnm_sp$" + variable+ "[is.na(vnm_sp$" + variable + ")] <- 0");
+
+                        //System.out.println("|||||||||" + "migrationVar["+i+"]" + "||||||||||");
+                        
                         
                         if (!variable.equals("FIPS_CNTRY")&&!variable.equals("CNTRY_NAME")&& !variable.equals("FIPS_CNTRY.1 ") && !variable.equals("COUNTRY") && !variable.equals("Country") ) {
               
                             
-                          tempObj2 = new JSONObject();
+                          tempObj= new JSONObject();
                           c.voidEval("globalGeary <- geary.test(as.numeric(vnm_sp$" + variable + "), listw=vnm_cnq_rsw,zero.policy=TRUE)");
-                          tempObj2.put("globalGeary",c.eval("globalGeary$estimate[1]").asDouble());
-                          tempObj2.put("globalGeary",c.eval("globalGeary$p.value").asDouble());
-                            
-                          c.voidEval("a=geary(as.numeric(vnm_sp$" + variable + "),vnm_cnq_rsw,length(vnm_cnq_rsw),length(vnm_cnq_rsw)-1,Szero(vnm_cnq_rsw),zero.policy=TRUE)"); 
-                          c.voidEval("set.seed(1234)");
-                          c.voidEval("bperm=geary.mc(as.numeric(vnm_sp$" +  variable + "), listw=vnm_cnq_rsw, nsim=999,zero.policy=TRUE)");
-                          c.voidEval("mean(bperm$res[1:999])");
-                          c.voidEval("var(bperm$res[1:999])");
-                          c.voidEval("summary(bperm$res[1:999])");  
-                            
-                            
+                          tempObj.put("globalGeary",c.eval("globalGeary$estimate[1]").asDouble());
+                          tempObj.put("globalGeary",c.eval("globalGeary$p.value").asDouble());
+                          globalMoranObject.put(variable,tempObj);      
+                         // c.voidEval("a=geary(as.numeric(vnm_sp$" + variable + "),vnm_cnq_rsw,length(vnm_cnq_rsw),length(vnm_cnq_rsw)-1,Szero(vnm_cnq_rsw),zero.policy=TRUE)"); 
+                         // c.voidEval("set.seed(1234)");
+                          //c.voidEval("bperm=geary.mc(as.numeric(vnm_sp$" +  variable + "), listw=vnm_cnq_rsw, nsim=999,zero.policy=TRUE)");
+                          //c.voidEval("mean(bperm$res[1:999])");
+                         // c.voidEval("var(bperm$res[1:999])");
+                        //  c.voidEval("summary(bperm$res[1:999])");  
+                          c.voidEval("nclocG <- localG(as.numeric(vnm_sp$" + variable + "),listw =vnm_cnq_rsw,zero.policy=TRUE)");
+                          c.voidEval("lmG = data.frame(nclocG[fips], row.names=vnm_sp$FIPS_CNTRY[fips])");
+                          c.voidEval("laggedVal = lag(vnm_cnq_rsw,as.numeric(vnminc$" + variable + "),zero.policy = TRUE, NAOK = TRUE)");
+                          c.voidEval("tempFrame$" + variable + "_lagged = laggedVal");
+                          c.voidEval("tempFrame$" + variable + "_Ii = lmG$Ii");
+                          c.voidEval("tempFrame$" + variable + "_Iisig = lmG$Pr.z...0."); 
+
+             
                         }
                     }
                     
+                          c.voidEval("tempFrame[is.na(tempFrame)] <- 0");
+                          c.voidEval("write.csv(tempFrame, file = \"" + moranOutputPathR + "\")");    
+
+                  }
 
                     CSVReader reader = new CSVReader(new FileReader(tempFilePath));
                     List csvRows = reader.readAll();

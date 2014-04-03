@@ -70,6 +70,7 @@ function bootstrap(){
         url: './MoranRCtrl',  
         data:{
             action:"MoransProcessing",
+            analysis:$("input:radio[name='analysis']:checked").val(),
             contiguity:$("input:radio[name='contiguityType']:checked").val()
 
         },
@@ -250,6 +251,7 @@ function processMoran(){
         url: './MoranRCtrl',  
         data:{
             action:"MoransProcessing",
+            analysis:$("input:radio[name='analysis']:checked").val(),
             contiguity: $("input:radio[name='contiguityType']:checked").val()
            // analysis: $("input:radio[name='analysisType']:checked").val()
            // weight: $("input:radio[name='weight']:checked").val(),
