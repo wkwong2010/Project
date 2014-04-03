@@ -2,7 +2,7 @@ var provSelectCount = 0; //made global variable so parallel coord js can read it
 //var admDivID = "CC_2";
 //var admDivName = "VARNAME_2";
 var admDivID = "FIPS_CNTRY"; //adm2code
-var admDivName = "I_CNTRY_NA"; //
+var admDivName = "i_CNTRY_NA"; //
 
 //Vietnam Map Settings
 //var north = 18.2;
