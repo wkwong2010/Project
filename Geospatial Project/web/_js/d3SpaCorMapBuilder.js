@@ -1,31 +1,8 @@
 var provSelectCount = 0; //made global variable so parallel coord js can read it
-//var admDivID = "CC_2";
-//var admDivName = "VARNAME_2";
+
 var admDivID = "FIPS_CNTRY"; //adm2code
 var admDivName = "i_CNTRY_NA"; //
 
-//Vietnam Map Settings
-//var north = 18.2;
-//var east = 114.5;
-//var scale = 2450;
-//var north = 18.2;
-//var east = 147.8;
-//var scale = 450;
-
-//China Map Settings 113.5760, 43.4549
-//var north = 43;
-//var east = 163;
-//var scale = 400;
-
-//Argentina Map Settings
-//var north = -34;
-//var east = -40;
-//var scale = 850;
-
-//Malaysia Map Settings
-//var north = 5;
-//var east = 110;
-//var scale = 2050;
 
 $(document).ready(function(){
     // ======================= Loading the Map ============================
@@ -47,20 +24,14 @@ $(document).ready(function(){
     var choropleth;// for the choropleth map
     var choropleth_mi;// for the choropleth map
     
-    // projection centered and zoomed in on the Vietnam data  .parallels([ east, north ])
-    //    proj = d3.geo.albers().origin([ 113.8, 18.2 ]).scale(2450);
-    //proj = d3.geo.albers().origin([ east, north ]).parallels([ east, north ]).scale(scale);
-    //proj = d3.geo.mercator().scale(12000).center([106.5760,15.4549]);//.translate([150,300]);
+ 
     proj = d3.geo.mercator()
     .scale(960 + 1)
     .translate([960 / 2, 960 / 2])
     .precision(.1);
     // path tags created based on the projection given
     path = d3.geo.path().projection(proj);
-    //t = proj.translate(); // the projection's default translation
-    //s = 2800 // the projection's default scale 
     
-    // appends an svg tag to element id=chart
     svg = d3.select("#choropleth_map")
     .append("svg")
     .attr("class","explorationMap")
